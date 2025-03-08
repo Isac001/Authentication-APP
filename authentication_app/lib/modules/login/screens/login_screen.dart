@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
+  // Constructor for LoginScreen
   const LoginScreen({super.key});
 
   @override
@@ -11,57 +12,72 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // Instance of LoginScreenController to manage login logic
   final LoginScreenController _loginScreenController =
       Get.find<LoginScreenController>();
 
+  // Variable to track password visibility
   bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
+      // Sets the background color of the screen
+      backgroundColor: Colors.white,
+
+      // Container with a blue border around the screen
+      body: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.blue, width: 15),
+        ),
+        child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Form(
               key: LoginFormKey.loginFormKey,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   _titleLogin(),
                   _emailField(),
                   _passwordField(),
-                  _rememberLoginRecoverPassword(),
-                  _buttonLogin(),
-                  _buttonRegister(),
+                  _buttonLogin()
                 ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
+  // Widget to display the login title
   Widget _titleLogin() {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.all(20),
       child: Text(
-        'Bem-vindo(a) de volta!',
+        'Seja Bem Vindo(A)!',
         style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  /// 🔹 Campo de e-mail
+  // Widget for the email input field
   Widget _emailField() {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
+      padding: const EdgeInsets.all(20),
       child: TextFormField(
         controller: _loginScreenController.emailController,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           labelText: "E-mail",
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.blue, width: 2),
+          ),
           prefixIcon: const Icon(Icons.email),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -73,70 +89,41 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /// 🔹 Campo de senha
+  // Widget for the password input field with visibility toggle
   Widget _passwordField() {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
+      padding: const EdgeInsets.all(20),
       child: TextFormField(
         controller: _loginScreenController.passwordController,
-        obscureText: !_passwordVisible, // Alterna visibilidade da senha
+        obscureText: !_passwordVisible,
         decoration: InputDecoration(
           labelText: "Senha",
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.blue, width: 2),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           prefixIcon: const Icon(Icons.lock),
           suffixIcon: IconButton(
-            icon: Icon(
-                _passwordVisible ? Icons.visibility : Icons.visibility_off),
             onPressed: () {
               setState(() {
-                _passwordVisible = !_passwordVisible; // Atualiza o estado
+                _passwordVisible = !_passwordVisible;
               });
             },
+            icon: Icon(
+                _passwordVisible ? Icons.visibility : Icons.visibility_off),
           ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Digite sua senha';
-          }
-          return null;
-        },
       ),
     );
   }
 
-  /// 🔹 Lembrar-me e Esqueci a Senha
-  Widget _rememberLoginRecoverPassword() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Obx(
-              () => CheckboxListTile(
-                title: const Text("Lembrar-me"),
-                value: _loginScreenController.stayConnected.value,
-                onChanged: (value) {
-                  _loginScreenController.stayConnected.value = value!;
-                },
-                controlAffinity: ListTileControlAffinity.leading,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Get.toNamed('/forgotPassword'); // Defina a rota correta aqui
-            },
-            child: const Text("Esqueci a senha"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// 🔹 Botão de login
+  // Widget for the login button
   Widget _buttonLogin() {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
+      padding: EdgeInsets.all(20),
       child: ElevatedButton(
         onPressed: () {
           if (LoginFormKey.loginFormKey.currentState!.validate()) {
@@ -144,21 +131,12 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue,
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+            backgroundColor: Colors.blue,
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
+        child: const Text(
+          'Entrar',
+          style: TextStyle(color: Colors.white),
         ),
-        child: const Text("Entrar"),
-      ),
-    );
-  }
-
-  /// 🔹 Botão de cadastro
-  Widget _buttonRegister() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: OutlinedButton(
-        onPressed: () => Get.toNamed(''),
-        child: const Text("Cadastre-se"),
       ),
     );
   }
