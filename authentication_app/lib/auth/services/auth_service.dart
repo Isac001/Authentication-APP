@@ -4,7 +4,6 @@ import 'dart:convert'; // Import to decode JSON
 import 'package:flutter/services.dart'; // Import to load assets files
 
 class AuthService {
-  
   // Instance of Dio for handling HTTP requests
   final Dio _dio = Dio();
 
@@ -12,7 +11,7 @@ class AuthService {
   late String baseUrl;
 
   // Endpoint for login authentication
-  final String loginEndpoint = 'auth/token/';
+  final String loginEndpoint = 'token/';
 
   // Constructor that calls the method to load env.json
   AuthService() {
@@ -30,12 +29,9 @@ class AuthService {
 
       // Assign BASEURL value to baseUrl variable
       baseUrl = envData['BASEURL'];
-
-      // Print the loaded URL for debugging
-      print("Base URL carregada: $baseUrl");
+      
     } catch (e) {
-      // Print error message if loading fails
-      print("Erro ao carregar o env.json: $e");
+      return Future.error(e);
     }
   }
 

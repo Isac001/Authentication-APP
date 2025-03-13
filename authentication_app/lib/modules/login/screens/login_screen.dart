@@ -40,7 +40,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   _titleLogin(),
                   _emailField(),
                   _passwordField(),
-                  _buttonLogin()
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: _buttonLogin(),
+                      ),
+                      Expanded(
+                        child: _buttonToCreateUser(),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -116,6 +126,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 _passwordVisible ? Icons.visibility : Icons.visibility_off),
           ),
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Digite sua senha';
+          }
+          return null;
+        },
       ),
     );
   }
@@ -123,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // Widget for the login button
   Widget _buttonLogin() {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(12),
       child: ElevatedButton(
         onPressed: () {
           if (LoginFormKey.loginFormKey.currentState!.validate()) {
@@ -131,13 +147,30 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
+            backgroundColor: Colors.blue, padding: const EdgeInsets.all(15)),
         child: const Text(
           'Entrar',
           style: TextStyle(color: Colors.white),
         ),
       ),
+    );
+  }
+
+  Widget _buttonToCreateUser() {
+    return Padding(
+      padding: EdgeInsets.all(12),
+      child: ElevatedButton(
+          onPressed: () {
+            Get.toNamed('/create_user');
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            padding: const EdgeInsets.all(15),
+          ),
+          child: const Text(
+            'Criar usuario',
+            style: TextStyle(color: Colors.white),
+          )),
     );
   }
 }
