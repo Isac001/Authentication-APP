@@ -1,6 +1,7 @@
 import 'package:authentication_app/modules/home/screns/home_screen.dart';
 import 'package:authentication_app/modules/login/screens/login_screen.dart';
 import 'package:authentication_app/modules/user/screens/create_user_screen.dart';
+import 'package:authentication_app/modules/user/screens/profile_user_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class Routes {
@@ -14,7 +15,7 @@ class Routes {
     GetPage(name: '/login', page: () => const LoginScreen()),
 
     // Route for the home screen
-    GetPage(name: '/home', page: () => const HomeScreen()),
+    GetPage(name: '/home', page: () => const ProfileUserScreen()),
 
     // Route for the registration user screen
     GetPage(name: '/create_user', page: () => const CreateUserScreen())
